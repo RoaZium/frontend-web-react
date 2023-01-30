@@ -1,5 +1,5 @@
 {
-  "name": "react-common",
+  "name": "react-flow-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-common": "react-scripts start"
+    "start-flow": "react-scripts start"
   },
   "eslintConfig": {
     "extends": [

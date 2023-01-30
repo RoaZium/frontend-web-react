@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Common 서비스
+          Flow 서비스
         </a>
       </header>
     </div>
