@@ -1,1 +1,0 @@
-global.css, normalize.css, fonts.css 등 전역 CSS 스타일과 관련된 파일
