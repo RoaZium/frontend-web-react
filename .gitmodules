@@ -1,0 +1,3 @@
+[submodule "frontend-react-base"]
+	path = frontend-react-base
+	url = https://github.com/RoaZium/frontend-react-base.git
