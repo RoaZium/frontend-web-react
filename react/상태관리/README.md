@@ -1,1 +1,1 @@
-Redux/Mobx/ContextAPI/Recoil
+Redux/Mobx/ContextAPI/Recoil/Zustand
