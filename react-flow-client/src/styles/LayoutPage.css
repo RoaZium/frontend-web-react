@@ -1,0 +1,22 @@
+.layOutPage {
+    width: 100%;
+    height: 969px;
+}
+
+.leftMenu {
+    width: 13%;
+    height: 100%;
+    float: left;
+}
+
+.pageContent {
+    width: 65%;
+    height: 100%;
+    float: left;
+}
+
+.valueContent {
+    width: 22%;
+    height: 100%;
+    float: left;
+}
