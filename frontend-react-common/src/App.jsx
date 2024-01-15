@@ -19,7 +19,6 @@ const getRoutes = (allRoutes) =>
 function App() {
   return (
     <div>
-      {/* <SideBar /> */}
       <Routes>
         {getRoutes(routes)}
         <Route path="/" element={<SignIn />} />
