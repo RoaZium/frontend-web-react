@@ -20,7 +20,7 @@ import "../../App.css";
 
 import Modal from "@mui/material/Modal";
 import { useStore } from "../../states/store";
-import SDSideBar from "../../components/SideBar/SideBar";
+import SDSideBar from "../../components/sidebar/SideBar"
 import WebServiceRequest from "../Popup/WebServiceRequest";
 import Partition from "../Popup/Partition";
 import Normalization from "../Popup/Normalization";

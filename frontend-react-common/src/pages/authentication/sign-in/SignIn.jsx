@@ -13,9 +13,9 @@ import {
   Checkbox,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import SignInContainer from "../../../components/LayoutContainers/SignInContainer/SignInContainer";
+import SignInContainer from "../../../components/layoutcontainers/SignInContainer/SignInContainer";
 
-const SignIn = () => {
+function SignIn () {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
