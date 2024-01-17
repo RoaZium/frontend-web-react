@@ -15,3 +15,6 @@ Page는 Layout과 비슷하지만 페이지 수준에서 작동합니다1. 각 �
 여러 Component들이 하나의 Layout을 구성하고, 이 Layout은 다시 Page를 구성합니다.
 
 > Page > Layout > Component의 관계를 가집니다.
+
+### Git Commit Message
+![Alt text](image.png)

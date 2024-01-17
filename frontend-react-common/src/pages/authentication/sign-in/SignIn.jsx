@@ -13,7 +13,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import SignInContainer from "../../../components/layoutcontainers/SignInContainer/SignInContainer";
+import SignInContainer from "../../../components/layouts/signincontainer/SignInContainer";
 
 function SignIn () {
   const navigate = useNavigate();
