@@ -130,3 +130,38 @@
   align-items: center;
   justify-content: center;
 }
+
+/* 아래 영역은 email */
+
+.app-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px; /* Adjust width as necessary */
+  background-color: #f0f0f0; /* Adjust color as necessary */
+  height: 100vh; /* Full height */
+  padding: 20px;
+}
+
+.main-content {
+  flex-grow: 1; /* Take up remaining space */
+  padding: 20px;
+}
+
+.header {
+  background-color: #d3d3d3; /* Adjust color as necessary */
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.item-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.item-list li {
+  padding: 10px;
+  background-color: #e9e9e9; /* Adjust color as necessary */
+  margin-bottom: 10px;
+}
