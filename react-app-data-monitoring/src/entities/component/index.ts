@@ -1,1 +1,15 @@
-// 폴더의 컴포넌트를 한 곳에서 내보내는 모듈 진입점 역할을 하여, 외부에서 간편히 import할 수 있게 합니다.
+// entities/component/index.ts
+// Component 엔티티 내보내기
+
+// API
+export { componentApi } from './api/api';
+
+// Model
+export { useComponentStore } from './model/store';
+export type { ComponentDto, ComponentInput, ComponentFilter, ComponentCategory } from './model/types';
+export { COMPONENT_CATEGORIES } from './model/types';
+
+// UI Components
+export { default as Card } from './ui/Card';
+export { default as List } from './ui/List';
+export { default as Form } from './ui/Form';
