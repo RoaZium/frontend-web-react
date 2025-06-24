@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import viteLogo from '/vite.svg'
 import './App.css'
+import List from '../entities/component/ui/List'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +14,8 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      {/* List 컴포넌트 UI 표시 */}
+      <List />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
