@@ -2,21 +2,13 @@
 import React, { useEffect } from 'react';
 import { useDataGroupStore } from '../model/store';
 import type { DataGroupDto, DataGroupQueryParams } from '../model/types';
-import Card from './Card';
 
 interface ListProps {
   filters?: DataGroupQueryParams;
   onDataGroupSelect?: (dataGroup: DataGroupDto) => void;
-  onDataGroupEdit?: (dataGroup: DataGroupDto) => void;
-  onDataGroupDelete?: (dataGroup: DataGroupDto) => void;
 }
 
-const List: React.FC<ListProps> = ({
-  filters = {},
-  onDataGroupSelect,
-  onDataGroupEdit,
-  onDataGroupDelete,
-}) => {
+const List: React.FC<ListProps> = ({ filters = {}, onDataGroupSelect }) => {
   const {
     dataGroups,
     isLoading,
@@ -33,20 +25,6 @@ const List: React.FC<ListProps> = ({
   const handleDataGroupSelect = (dataGroup: DataGroupDto) => {
     setSelectedDataGroup(dataGroup);
     onDataGroupSelect?.(dataGroup);
-  };
-
-  const handleDataGroupEdit = (dataGroup: DataGroupDto) => {
-    onDataGroupEdit?.(dataGroup);
-  };
-
-  const handleDataGroupDelete = async (dataGroup: DataGroupDto) => {
-    if (window.confirm(`"${dataGroup.name}" 데이터 그룹을 삭제하시겠습니까?`)) {
-      try {
-        await onDataGroupDelete?.(dataGroup);
-      } catch (error) {
-        alert('데이터 그룹 삭제 중 오류가 발생했습니다.');
-      }
-    }
   };
 
   if (isLoading) {
@@ -74,26 +52,64 @@ const List: React.FC<ListProps> = ({
   }
 
   return (
-    <div className="datagroup-list">
-      <div style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
-        총 {dataGroups.length}개의 데이터 그룹
+    <div style={{ padding: '16px' }}>
+      <div
+        style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}
+      >
+        데이터 그룹 목록 ({dataGroups.length}개)
       </div>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '16px',
+          border: '1px solid #ddd',
+          borderRadius: '8px',
+          overflow: 'hidden',
         }}
       >
-        {dataGroups.map((dataGroup) => (
-          <Card
+        {dataGroups.map((dataGroup, index) => (
+          <div
             key={dataGroup.id}
-            dataGroup={dataGroup}
-            isSelected={selectedDataGroup?.id === dataGroup.id}
-            onSelect={handleDataGroupSelect}
-            onEdit={handleDataGroupEdit}
-            onDelete={handleDataGroupDelete}
-          />
+            onClick={() => handleDataGroupSelect(dataGroup)}
+            style={{
+              padding: '12px 16px',
+              borderBottom:
+                index < dataGroups.length - 1 ? '1px solid #eee' : 'none',
+              backgroundColor:
+                selectedDataGroup?.id === dataGroup.id ? '#e3f2fd' : '#fff',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              transition: 'background-color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              if (selectedDataGroup?.id !== dataGroup.id) {
+                e.currentTarget.style.backgroundColor = '#f5f5f5';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedDataGroup?.id !== dataGroup.id) {
+                e.currentTarget.style.backgroundColor = '#fff';
+              }
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  marginBottom: '4px',
+                }}
+              >
+                {dataGroup.name}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>
+                코드: {dataGroup.code} | 순서: {dataGroup.menuOrder}
+              </div>
+            </div>
+            <div style={{ fontSize: '12px', color: '#999' }}>
+              {new Date(dataGroup.createdAt).toLocaleDateString('ko-KR')}
+            </div>
+          </div>
         ))}
       </div>
     </div>

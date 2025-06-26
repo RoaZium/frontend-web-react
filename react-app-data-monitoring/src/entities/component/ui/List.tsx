@@ -2,21 +2,13 @@
 import React, { useEffect } from 'react';
 import { useComponentStore } from '../model/store';
 import type { ComponentDto, ComponentFilter } from '../model/types';
-import Card from './Card';
 
 interface ListProps {
   filters?: ComponentFilter;
   onComponentSelect?: (component: ComponentDto) => void;
-  onComponentEdit?: (component: ComponentDto) => void;
-  onComponentDelete?: (component: ComponentDto) => void;
 }
 
-const List: React.FC<ListProps> = ({
-  filters = {},
-  onComponentSelect,
-  onComponentEdit,
-  onComponentDelete,
-}) => {
+const List: React.FC<ListProps> = ({ filters = {}, onComponentSelect }) => {
   const {
     components,
     isLoading,
@@ -33,20 +25,6 @@ const List: React.FC<ListProps> = ({
   const handleComponentSelect = (component: ComponentDto) => {
     setSelectedComponent(component);
     onComponentSelect?.(component);
-  };
-
-  const handleComponentEdit = (component: ComponentDto) => {
-    onComponentEdit?.(component);
-  };
-
-  const handleComponentDelete = async (component: ComponentDto) => {
-    if (window.confirm(`"${component.name}" 컴포넌트를 삭제하시겠습니까?`)) {
-      try {
-        await onComponentDelete?.(component);
-      } catch (error) {
-        alert('컴포넌트 삭제 중 오류가 발생했습니다.');
-      }
-    }
   };
 
   if (isLoading) {
@@ -74,26 +52,65 @@ const List: React.FC<ListProps> = ({
   }
 
   return (
-    <div className="component-list">
-      <div style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
-        총 {components.length}개의 컴포넌트
+    <div style={{ padding: '16px' }}>
+      <div
+        style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}
+      >
+        컴포넌트 목록 ({components.length}개)
       </div>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '16px',
+          border: '1px solid #ddd',
+          borderRadius: '8px',
+          overflow: 'hidden',
         }}
       >
-        {components.map((component) => (
-          <Card
+        {components.map((component, index) => (
+          <div
             key={component.id}
-            component={component}
-            isSelected={selectedComponent?.id === component.id}
-            onSelect={handleComponentSelect}
-            onEdit={handleComponentEdit}
-            onDelete={handleComponentDelete}
-          />
+            onClick={() => handleComponentSelect(component)}
+            style={{
+              padding: '12px 16px',
+              borderBottom:
+                index < components.length - 1 ? '1px solid #eee' : 'none',
+              backgroundColor:
+                selectedComponent?.id === component.id ? '#e3f2fd' : '#fff',
+              cursor: 'pointer',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              transition: 'background-color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              if (selectedComponent?.id !== component.id) {
+                e.currentTarget.style.backgroundColor = '#f5f5f5';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedComponent?.id !== component.id) {
+                e.currentTarget.style.backgroundColor = '#fff';
+              }
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  marginBottom: '4px',
+                }}
+              >
+                {component.name}
+              </div>
+              <div style={{ fontSize: '14px', color: '#666' }}>
+                카테고리: {component.category} | 슬라이드 ID:{' '}
+                {component.slideId}
+              </div>
+            </div>
+            <div style={{ fontSize: '12px', color: '#999' }}>
+              {new Date(component.createdAt).toLocaleDateString('ko-KR')}
+            </div>
+          </div>
         ))}
       </div>
     </div>
