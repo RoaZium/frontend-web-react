@@ -14,7 +14,6 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      {/* List 컴포넌트 UI 표시 */}
       <List />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>

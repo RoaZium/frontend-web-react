@@ -11,11 +11,11 @@ interface ListProps {
   onComponentDelete?: (component: ComponentDto) => void;
 }
 
-const List: React.FC<ListProps> = ({ 
-  filters = {}, 
+const List: React.FC<ListProps> = ({
+  filters = {},
   onComponentSelect,
   onComponentEdit,
-  onComponentDelete 
+  onComponentDelete,
 }) => {
   const {
     components,
@@ -23,12 +23,12 @@ const List: React.FC<ListProps> = ({
     error,
     selectedComponent,
     fetchComponents,
-    setSelectedComponent
+    setSelectedComponent,
   } = useComponentStore();
 
   useEffect(() => {
     fetchComponents(filters);
-  }, [filters, fetchComponents]);
+  }, []);
 
   const handleComponentSelect = (component: ComponentDto) => {
     setSelectedComponent(component);
@@ -78,7 +78,13 @@ const List: React.FC<ListProps> = ({
       <div style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
         총 {components.length}개의 컴포넌트
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: '16px',
+        }}
+      >
         {components.map((component) => (
           <Card
             key={component.id}

@@ -1,8 +1,7 @@
 // entities/component/api/api.ts
 import axios from 'axios';
+import { ENV } from '../../../shared/config/env';
 import type { ComponentDto, ComponentInput, ComponentFilter } from '../model/types';
-
-const BASE_URL = 'http://127.0.0.1:8081/api/v1';
 
 export const componentApi = {
   /**
@@ -16,7 +15,7 @@ export const componentApi = {
     if (category) queryParams.append('category', category);
     if (name) queryParams.append('name', name);
     
-    const url = `${BASE_URL}/components${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+    const url = `${ENV.api.baseUrl}/v1/components${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
     const response = await axios.get<ComponentDto[]>(url);
     return response.data;
   },
@@ -25,7 +24,7 @@ export const componentApi = {
    * 컴포넌트 조회 (ID)
    */
   getComponentById: async (id: string): Promise<ComponentDto> => {
-    const response = await axios.get<ComponentDto>(`${BASE_URL}/components/${id}`);
+    const response = await axios.get<ComponentDto>(`${ENV.api.baseUrl}/v1/components/${id}`);
     return response.data;
   },
 
@@ -33,7 +32,7 @@ export const componentApi = {
    * 컴포넌트 생성
    */
   createComponent: async (componentData: ComponentInput): Promise<ComponentDto> => {
-    const response = await axios.post<ComponentDto>(`${BASE_URL}/components`, componentData);
+    const response = await axios.post<ComponentDto>(`${ENV.api.baseUrl}/v1/components`, componentData);
     return response.data;
   },
 
@@ -41,7 +40,7 @@ export const componentApi = {
    * 컴포넌트 수정
    */
   updateComponent: async (id: string, componentData: ComponentInput): Promise<ComponentDto> => {
-    const response = await axios.put<ComponentDto>(`${BASE_URL}/components/${id}`, componentData);
+    const response = await axios.put<ComponentDto>(`${ENV.api.baseUrl}/v1/components/${id}`, componentData);
     return response.data;
   },
 
@@ -49,6 +48,6 @@ export const componentApi = {
    * 컴포넌트 삭제
    */
   deleteComponent: async (id: string): Promise<void> => {
-    await axios.delete(`${BASE_URL}/components/${id}`);
+    await axios.delete(`${ENV.api.baseUrl}/v1/components/${id}`);
   }
 };
