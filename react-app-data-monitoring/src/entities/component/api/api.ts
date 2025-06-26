@@ -1,7 +1,11 @@
 // entities/component/api/api.ts
 import axios from 'axios';
 import { ENV } from '../../../shared/config/env';
-import type { ComponentDto, ComponentInput, ComponentFilter } from '../model/types';
+import type {
+  ComponentDto,
+  ComponentInput,
+  ComponentFilter
+} from '../model/types';
 
 export const componentApi = {
   /**
