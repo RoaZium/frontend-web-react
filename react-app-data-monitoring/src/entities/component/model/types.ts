@@ -7,7 +7,7 @@ export interface ComponentDto {
   category: string; // string (required) - 'shape', 'chart', 'table', 'image'
   name: string; // string (required)
   arrangeJson?: string; // string (optional)
-  dataJson?: string; // string (optional) 
+  dataJson?: string; // string (optional)
   styleJson?: string; // string (optional)
   textJson?: string; // string (optional)
   createdAt: string; // date-time string (required)
@@ -32,12 +32,13 @@ export interface ComponentInput {
  */
 export const COMPONENT_CATEGORIES = {
   SHAPE: 'shape',
-  CHART: 'chart', 
+  CHART: 'chart',
   TABLE: 'table',
-  IMAGE: 'image'
+  IMAGE: 'image',
 } as const;
 
-export type ComponentCategory = typeof COMPONENT_CATEGORIES[keyof typeof COMPONENT_CATEGORIES];
+export type ComponentCategory =
+  (typeof COMPONENT_CATEGORIES)[keyof typeof COMPONENT_CATEGORIES];
 
 /**
  * Component 필터 타입

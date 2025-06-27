@@ -27,12 +27,12 @@ interface FormErrors {
   name?: string;
 }
 
-const Form: React.FC<FormProps> = ({ 
-  component = null, 
+const Form: React.FC<FormProps> = ({
+  component = null,
   slideId = '',
-  onSubmit, 
+  onSubmit,
   onCancel,
-  isLoading = false 
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState<FormData>({
     slideId: slideId,
@@ -41,7 +41,7 @@ const Form: React.FC<FormProps> = ({
     arrangeJson: '',
     dataJson: '',
     styleJson: '',
-    textJson: ''
+    textJson: '',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -55,7 +55,7 @@ const Form: React.FC<FormProps> = ({
         arrangeJson: component.arrangeJson || '',
         dataJson: component.dataJson || '',
         styleJson: component.styleJson || '',
-        textJson: component.textJson || ''
+        textJson: component.textJson || '',
       });
     }
   }, [component, slideId]);
@@ -79,25 +79,29 @@ const Form: React.FC<FormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -109,14 +113,17 @@ const Form: React.FC<FormProps> = ({
       arrangeJson: formData.arrangeJson || undefined,
       dataJson: formData.dataJson || undefined,
       styleJson: formData.styleJson || undefined,
-      textJson: formData.textJson || undefined
+      textJson: formData.textJson || undefined,
     };
 
     onSubmit?.(submitData);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ maxWidth: '600px', margin: '0 auto' }}
+    >
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{ marginBottom: '20px' }}>
           {component ? '컴포넌트 수정' : '새 컴포넌트 생성'}
@@ -124,7 +131,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 슬라이드 ID */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             슬라이드 ID *
           </label>
           <input
@@ -138,12 +147,14 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.slideId ? '#f44336' : '#ddd'
+              borderColor: errors.slideId ? '#f44336' : '#ddd',
             }}
             placeholder="슬라이드 ID를 입력하세요"
           />
           {errors.slideId && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.slideId}
             </div>
           )}
@@ -151,7 +162,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 카테고리 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             카테고리 *
           </label>
           <select
@@ -164,7 +177,7 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.category ? '#f44336' : '#ddd'
+              borderColor: errors.category ? '#f44336' : '#ddd',
             }}
           >
             <option value="">카테고리를 선택하세요</option>
@@ -174,7 +187,9 @@ const Form: React.FC<FormProps> = ({
             <option value={COMPONENT_CATEGORIES.IMAGE}>Image</option>
           </select>
           {errors.category && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.category}
             </div>
           )}
@@ -182,7 +197,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 컴포넌트 이름 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             컴포넌트 이름 *
           </label>
           <input
@@ -196,12 +213,14 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.name ? '#f44336' : '#ddd'
+              borderColor: errors.name ? '#f44336' : '#ddd',
             }}
             placeholder="컴포넌트 이름을 입력하세요"
           />
           {errors.name && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.name}
             </div>
           )}
@@ -209,7 +228,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* JSON 필드들 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             배치 정보 (JSON)
           </label>
           <textarea
@@ -223,14 +244,16 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              resize: 'vertical'
+              resize: 'vertical',
             }}
             placeholder='{"x": 0, "y": 0, "width": 100, "height": 100}'
           />
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             데이터 정보 (JSON)
           </label>
           <textarea
@@ -244,14 +267,16 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              resize: 'vertical'
+              resize: 'vertical',
             }}
             placeholder='{"source": "api", "endpoint": "/data"}'
           />
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             스타일 정보 (JSON)
           </label>
           <textarea
@@ -265,14 +290,16 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              resize: 'vertical'
+              resize: 'vertical',
             }}
             placeholder='{"backgroundColor": "#ffffff", "borderColor": "#000000"}'
           />
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             텍스트 정보 (JSON)
           </label>
           <textarea
@@ -286,14 +313,16 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              resize: 'vertical'
+              resize: 'vertical',
             }}
             placeholder='{"fontSize": 14, "fontFamily": "Arial", "color": "#000000"}'
           />
         </div>
 
         {/* 버튼 영역 */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}
+        >
           <button
             type="button"
             onClick={onCancel}
@@ -303,7 +332,7 @@ const Form: React.FC<FormProps> = ({
               borderRadius: '4px',
               background: '#fff',
               cursor: 'pointer',
-              fontSize: '14px'
+              fontSize: '14px',
             }}
           >
             취소
@@ -318,10 +347,10 @@ const Form: React.FC<FormProps> = ({
               background: isLoading ? '#ccc' : '#2196f3',
               color: '#fff',
               cursor: isLoading ? 'not-allowed' : 'pointer',
-              fontSize: '14px'
+              fontSize: '14px',
             }}
           >
-            {isLoading ? '저장 중...' : (component ? '수정' : '생성')}
+            {isLoading ? '저장 중...' : component ? '수정' : '생성'}
           </button>
         </div>
       </div>

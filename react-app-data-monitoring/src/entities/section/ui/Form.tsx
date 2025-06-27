@@ -72,14 +72,14 @@ const Form: React.FC<FormProps> = ({
     const { name, value } = e.target;
     const processedValue = name === 'menuOrder' ? parseInt(value) || 0 : value;
 
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
         [name]: '',
       }));

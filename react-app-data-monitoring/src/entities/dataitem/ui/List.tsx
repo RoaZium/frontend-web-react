@@ -61,7 +61,7 @@ const List: React.FC<ListProps> = ({ filters = {}, onDataItemSelect }) => {
           gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         }}
       >
-        {dataItems.map((dataItem) => {
+        {dataItems.map(dataItem => {
           const isSelected = selectedDataItem?.id === dataItem.id;
           return (
             <div
@@ -75,11 +75,11 @@ const List: React.FC<ListProps> = ({ filters = {}, onDataItemSelect }) => {
                 backgroundColor: isSelected ? '#e3f2fd' : '#fff',
                 transition: 'all 0.2s ease',
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 if (!isSelected)
                   e.currentTarget.style.backgroundColor = '#f5f5f5';
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 if (!isSelected) e.currentTarget.style.backgroundColor = '#fff';
               }}
             >

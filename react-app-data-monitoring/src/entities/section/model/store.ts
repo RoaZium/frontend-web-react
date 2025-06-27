@@ -1,7 +1,12 @@
 // entities/section/model/store.ts
 import { create } from 'zustand';
 import { sectionApi } from '../api/api';
-import type { SectionDto, SectionCreateRequest, SectionUpdateRequest, SectionQueryParams } from './types';
+import type {
+  SectionDto,
+  SectionCreateRequest,
+  SectionUpdateRequest,
+  SectionQueryParams,
+} from './types';
 
 interface SectionState {
   // 상태
@@ -15,7 +20,10 @@ interface SectionState {
   fetchSections: (filters?: SectionQueryParams) => Promise<SectionDto[]>;
   fetchSectionById: (id: string) => Promise<SectionDto>;
   createSection: (sectionData: SectionCreateRequest) => Promise<SectionDto>;
-  updateSection: (id: string, sectionData: SectionUpdateRequest) => Promise<SectionDto>;
+  updateSection: (
+    id: string,
+    sectionData: SectionUpdateRequest
+  ) => Promise<SectionDto>;
   deleteSection: (id: string) => Promise<void>;
   setSelectedSection: (section: SectionDto | null) => void;
   setFilters: (filters: Partial<SectionQueryParams>) => void;
@@ -30,19 +38,22 @@ export const useSectionStore = create<SectionState>((set, get) => ({
   error: null,
   filters: {
     userId: '',
-    name: ''
+    name: '',
   },
 
   // 액션
   // 섹션 목록 조회
-  fetchSections: async (filters: SectionQueryParams = {}): Promise<SectionDto[]> => {
+  fetchSections: async (
+    filters: SectionQueryParams = {}
+  ): Promise<SectionDto[]> => {
     set({ isLoading: true, error: null });
     try {
       const sections = await sectionApi.getSections(filters);
       set({ sections, isLoading: false });
       return sections;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -56,44 +67,55 @@ export const useSectionStore = create<SectionState>((set, get) => ({
       set({ selectedSection: section, isLoading: false });
       return section;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 섹션 생성
-  createSection: async (sectionData: SectionCreateRequest): Promise<SectionDto> => {
+  createSection: async (
+    sectionData: SectionCreateRequest
+  ): Promise<SectionDto> => {
     set({ isLoading: true, error: null });
     try {
       const newSection = await sectionApi.createSection(sectionData);
-      set((state) => ({
+      set(state => ({
         sections: [...state.sections, newSection],
-        isLoading: false
+        isLoading: false,
       }));
       return newSection;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 섹션 수정
-  updateSection: async (id: string, sectionData: SectionUpdateRequest): Promise<SectionDto> => {
+  updateSection: async (
+    id: string,
+    sectionData: SectionUpdateRequest
+  ): Promise<SectionDto> => {
     set({ isLoading: true, error: null });
     try {
       const updatedSection = await sectionApi.updateSection(id, sectionData);
-      set((state) => ({
+      set(state => ({
         sections: state.sections.map(section =>
           section.id === id ? updatedSection : section
         ),
-        selectedSection: state.selectedSection?.id === id ? updatedSection : state.selectedSection,
-        isLoading: false
+        selectedSection:
+          state.selectedSection?.id === id
+            ? updatedSection
+            : state.selectedSection,
+        isLoading: false,
       }));
       return updatedSection;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -104,13 +126,15 @@ export const useSectionStore = create<SectionState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await sectionApi.deleteSection(id);
-      set((state) => ({
+      set(state => ({
         sections: state.sections.filter(section => section.id !== id),
-        selectedSection: state.selectedSection?.id === id ? null : state.selectedSection,
-        isLoading: false
+        selectedSection:
+          state.selectedSection?.id === id ? null : state.selectedSection,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -133,7 +157,7 @@ export const useSectionStore = create<SectionState>((set, get) => ({
       selectedSection: null,
       isLoading: false,
       error: null,
-      filters: { userId: '', name: '' }
+      filters: { userId: '', name: '' },
     });
-  }
+  },
 }));

@@ -89,14 +89,14 @@ const Form: React.FC<FormProps> = ({
       processedValue = parseInt(value) || 0;
     }
 
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
         [name]: '',
       }));
@@ -107,7 +107,7 @@ const Form: React.FC<FormProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       // 파일 정보 자동 설정
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
         name: file.name,
         size: file.size,
@@ -116,7 +116,7 @@ const Form: React.FC<FormProps> = ({
 
       // 이미지 미리보기
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = event => {
         setPreviewUrl(event.target?.result as string);
       };
       reader.readAsDataURL(file);

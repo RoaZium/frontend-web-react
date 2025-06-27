@@ -81,12 +81,12 @@ const List: React.FC<ListProps> = ({ filters = {}, onComponentSelect }) => {
               alignItems: 'center',
               transition: 'background-color 0.2s ease',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               if (selectedComponent?.id !== component.id) {
                 e.currentTarget.style.backgroundColor = '#f5f5f5';
               }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               if (selectedComponent?.id !== component.id) {
                 e.currentTarget.style.backgroundColor = '#fff';
               }

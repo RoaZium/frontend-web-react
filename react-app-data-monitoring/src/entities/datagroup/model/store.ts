@@ -1,7 +1,12 @@
 // entities/datagroup/model/store.ts
 import { create } from 'zustand';
 import { dataGroupApi } from '../api/api';
-import type { DataGroupDto, DataGroupCreateRequest, DataGroupUpdateRequest, DataGroupQueryParams } from './types';
+import type {
+  DataGroupDto,
+  DataGroupCreateRequest,
+  DataGroupUpdateRequest,
+  DataGroupQueryParams,
+} from './types';
 
 interface DataGroupState {
   // 상태
@@ -14,8 +19,13 @@ interface DataGroupState {
   // 액션
   fetchDataGroups: (filters?: DataGroupQueryParams) => Promise<DataGroupDto[]>;
   fetchDataGroupById: (id: string) => Promise<DataGroupDto>;
-  createDataGroup: (dataGroupData: DataGroupCreateRequest) => Promise<DataGroupDto>;
-  updateDataGroup: (id: string, dataGroupData: DataGroupUpdateRequest) => Promise<DataGroupDto>;
+  createDataGroup: (
+    dataGroupData: DataGroupCreateRequest
+  ) => Promise<DataGroupDto>;
+  updateDataGroup: (
+    id: string,
+    dataGroupData: DataGroupUpdateRequest
+  ) => Promise<DataGroupDto>;
   deleteDataGroup: (id: string) => Promise<void>;
   setSelectedDataGroup: (dataGroup: DataGroupDto | null) => void;
   setFilters: (filters: Partial<DataGroupQueryParams>) => void;
@@ -30,19 +40,22 @@ export const useDataGroupStore = create<DataGroupState>((set, get) => ({
   error: null,
   filters: {
     code: '',
-    name: ''
+    name: '',
   },
 
   // 액션
   // 데이터 그룹 목록 조회
-  fetchDataGroups: async (filters: DataGroupQueryParams = {}): Promise<DataGroupDto[]> => {
+  fetchDataGroups: async (
+    filters: DataGroupQueryParams = {}
+  ): Promise<DataGroupDto[]> => {
     set({ isLoading: true, error: null });
     try {
       const dataGroups = await dataGroupApi.getDataGroups(filters);
       set({ dataGroups, isLoading: false });
       return dataGroups;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -56,44 +69,58 @@ export const useDataGroupStore = create<DataGroupState>((set, get) => ({
       set({ selectedDataGroup: dataGroup, isLoading: false });
       return dataGroup;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 데이터 그룹 생성
-  createDataGroup: async (dataGroupData: DataGroupCreateRequest): Promise<DataGroupDto> => {
+  createDataGroup: async (
+    dataGroupData: DataGroupCreateRequest
+  ): Promise<DataGroupDto> => {
     set({ isLoading: true, error: null });
     try {
       const newDataGroup = await dataGroupApi.createDataGroup(dataGroupData);
-      set((state) => ({
+      set(state => ({
         dataGroups: [...state.dataGroups, newDataGroup],
-        isLoading: false
+        isLoading: false,
       }));
       return newDataGroup;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 데이터 그룹 수정
-  updateDataGroup: async (id: string, dataGroupData: DataGroupUpdateRequest): Promise<DataGroupDto> => {
+  updateDataGroup: async (
+    id: string,
+    dataGroupData: DataGroupUpdateRequest
+  ): Promise<DataGroupDto> => {
     set({ isLoading: true, error: null });
     try {
-      const updatedDataGroup = await dataGroupApi.updateDataGroup(id, dataGroupData);
-      set((state) => ({
+      const updatedDataGroup = await dataGroupApi.updateDataGroup(
+        id,
+        dataGroupData
+      );
+      set(state => ({
         dataGroups: state.dataGroups.map(dataGroup =>
           dataGroup.id === id ? updatedDataGroup : dataGroup
         ),
-        selectedDataGroup: state.selectedDataGroup?.id === id ? updatedDataGroup : state.selectedDataGroup,
-        isLoading: false
+        selectedDataGroup:
+          state.selectedDataGroup?.id === id
+            ? updatedDataGroup
+            : state.selectedDataGroup,
+        isLoading: false,
       }));
       return updatedDataGroup;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -104,13 +131,15 @@ export const useDataGroupStore = create<DataGroupState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await dataGroupApi.deleteDataGroup(id);
-      set((state) => ({
+      set(state => ({
         dataGroups: state.dataGroups.filter(dataGroup => dataGroup.id !== id),
-        selectedDataGroup: state.selectedDataGroup?.id === id ? null : state.selectedDataGroup,
-        isLoading: false
+        selectedDataGroup:
+          state.selectedDataGroup?.id === id ? null : state.selectedDataGroup,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -133,7 +162,7 @@ export const useDataGroupStore = create<DataGroupState>((set, get) => ({
       selectedDataGroup: null,
       isLoading: false,
       error: null,
-      filters: { code: '', name: '' }
+      filters: { code: '', name: '' },
     });
-  }
+  },
 }));

@@ -89,12 +89,12 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
               alignItems: 'center',
               transition: 'background-color 0.2s ease',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               if (selectedImage?.id !== image.id) {
                 e.currentTarget.style.backgroundColor = '#f5f5f5';
               }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               if (selectedImage?.id !== image.id) {
                 e.currentTarget.style.backgroundColor = '#fff';
               }
@@ -112,7 +112,7 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
                     borderRadius: '4px',
                     border: '1px solid #ddd',
                   }}
-                  onError={(e) => {
+                  onError={e => {
                     e.currentTarget.src =
                       'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0MFY0MEgyMFYyMFoiIGZpbGw9IiNEREREREQiLz4KPC9zdmc+';
                   }}

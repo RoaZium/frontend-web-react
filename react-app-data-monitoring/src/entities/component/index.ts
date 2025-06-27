@@ -6,7 +6,12 @@ export { componentApi } from './api/api';
 
 // Model
 export { useComponentStore } from './model/store';
-export type { ComponentDto, ComponentInput, ComponentFilter, ComponentCategory } from './model/types';
+export type {
+  ComponentDto,
+  ComponentInput,
+  ComponentFilter,
+  ComponentCategory,
+} from './model/types';
 export { COMPONENT_CATEGORIES } from './model/types';
 
 // UI Components

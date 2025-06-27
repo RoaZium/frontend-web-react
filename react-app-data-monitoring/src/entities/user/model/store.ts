@@ -1,7 +1,12 @@
 // entities/user/model/store.ts
 import { create } from 'zustand';
 import { userApi } from '../api/api';
-import type { UserDto, UserCreateRequest, UserUpdateRequest, UserQueryParams } from './types';
+import type {
+  UserDto,
+  UserCreateRequest,
+  UserUpdateRequest,
+  UserQueryParams,
+} from './types';
 
 interface UserState {
   // 상태
@@ -32,7 +37,7 @@ export const useUserStore = create<UserState>((set, get) => ({
     email: '',
     name: '',
     role: undefined,
-    isActive: undefined
+    isActive: undefined,
   },
 
   // 액션
@@ -44,7 +49,8 @@ export const useUserStore = create<UserState>((set, get) => ({
       set({ users, isLoading: false });
       return users;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -58,7 +64,8 @@ export const useUserStore = create<UserState>((set, get) => ({
       set({ selectedUser: user, isLoading: false });
       return user;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -69,33 +76,37 @@ export const useUserStore = create<UserState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const newUser = await userApi.createUser(userData);
-      set((state) => ({
+      set(state => ({
         users: [...state.users, newUser],
-        isLoading: false
+        isLoading: false,
       }));
       return newUser;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 사용자 수정
-  updateUser: async (id: string, userData: UserUpdateRequest): Promise<UserDto> => {
+  updateUser: async (
+    id: string,
+    userData: UserUpdateRequest
+  ): Promise<UserDto> => {
     set({ isLoading: true, error: null });
     try {
       const updatedUser = await userApi.updateUser(id, userData);
-      set((state) => ({
-        users: state.users.map(user =>
-          user.id === id ? updatedUser : user
-        ),
-        selectedUser: state.selectedUser?.id === id ? updatedUser : state.selectedUser,
-        isLoading: false
+      set(state => ({
+        users: state.users.map(user => (user.id === id ? updatedUser : user)),
+        selectedUser:
+          state.selectedUser?.id === id ? updatedUser : state.selectedUser,
+        isLoading: false,
       }));
       return updatedUser;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -106,13 +117,14 @@ export const useUserStore = create<UserState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await userApi.deleteUser(id);
-      set((state) => ({
+      set(state => ({
         users: state.users.filter(user => user.id !== id),
         selectedUser: state.selectedUser?.id === id ? null : state.selectedUser,
-        isLoading: false
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -135,7 +147,7 @@ export const useUserStore = create<UserState>((set, get) => ({
       selectedUser: null,
       isLoading: false,
       error: null,
-      filters: { email: '', name: '', role: undefined, isActive: undefined }
+      filters: { email: '', name: '', role: undefined, isActive: undefined },
     });
-  }
+  },
 }));

@@ -55,12 +55,12 @@ const Card: React.FC<CardProps> = ({
         transition: 'all 0.2s ease',
         minWidth: '300px',
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         if (!isSelected) {
           e.currentTarget.style.backgroundColor = '#f5f5f5';
         }
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         if (!isSelected) {
           e.currentTarget.style.backgroundColor = '#fff';
         }
@@ -86,7 +86,7 @@ const Card: React.FC<CardProps> = ({
                 borderRadius: '4px',
                 border: '1px solid #ddd',
               }}
-              onError={(e) => {
+              onError={e => {
                 e.currentTarget.src =
                   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDE1MCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik02MCA0MEg5MFY2MEg2MFY0MFoiIGZpbGw9IiNEREREREQiLz4KPHRLEH1PSU50PSI3NSA1MCIgZmlsbD0iI0RERERERCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5JbWFnZTwvdGV4dD4KPC9zdmc+';
               }}

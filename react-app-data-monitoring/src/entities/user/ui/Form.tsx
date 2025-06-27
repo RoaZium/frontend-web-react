@@ -83,14 +83,14 @@ const Form: React.FC<FormProps> = ({
       processedValue = (e.target as HTMLInputElement).checked;
     }
 
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
         [name]: '',
       }));

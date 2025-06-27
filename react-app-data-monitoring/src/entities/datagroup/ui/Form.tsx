@@ -1,6 +1,10 @@
 // entities/datagroup/ui/Form.tsx
 import React, { useState, useEffect } from 'react';
-import type { DataGroupDto, DataGroupCreateRequest, DataGroupUpdateRequest } from '../model/types';
+import type {
+  DataGroupDto,
+  DataGroupCreateRequest,
+  DataGroupUpdateRequest,
+} from '../model/types';
 
 interface FormProps {
   dataGroup?: DataGroupDto | null;
@@ -21,11 +25,11 @@ interface FormErrors {
   menuOrder?: string;
 }
 
-const Form: React.FC<FormProps> = ({ 
-  dataGroup = null, 
-  onSubmit, 
+const Form: React.FC<FormProps> = ({
+  dataGroup = null,
+  onSubmit,
   onCancel,
-  isLoading = false 
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState<FormData>({
     code: '',
@@ -67,24 +71,24 @@ const Form: React.FC<FormProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const processedValue = name === 'menuOrder' ? parseInt(value) || 0 : value;
-    
+
     setFormData(prev => ({
       ...prev,
-      [name]: processedValue
+      [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -92,14 +96,17 @@ const Form: React.FC<FormProps> = ({
     const submitData: DataGroupCreateRequest | DataGroupUpdateRequest = {
       code: formData.code,
       name: formData.name,
-      menuOrder: formData.menuOrder
+      menuOrder: formData.menuOrder,
     };
 
     onSubmit?.(submitData);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ maxWidth: '600px', margin: '0 auto' }}
+    >
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{ marginBottom: '20px' }}>
           {dataGroup ? '데이터 그룹 수정' : '새 데이터 그룹 생성'}
@@ -107,7 +114,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 코드 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             코드 *
           </label>
           <input
@@ -121,12 +130,14 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.code ? '#f44336' : '#ddd'
+              borderColor: errors.code ? '#f44336' : '#ddd',
             }}
             placeholder="데이터 그룹 코드를 입력하세요"
           />
           {errors.code && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.code}
             </div>
           )}
@@ -134,7 +145,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 이름 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             이름 *
           </label>
           <input
@@ -148,12 +161,14 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.name ? '#f44336' : '#ddd'
+              borderColor: errors.name ? '#f44336' : '#ddd',
             }}
             placeholder="데이터 그룹 이름을 입력하세요"
           />
           {errors.name && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.name}
             </div>
           )}
@@ -161,7 +176,9 @@ const Form: React.FC<FormProps> = ({
 
         {/* 순서 */}
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+          <label
+            style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}
+          >
             순서
           </label>
           <input
@@ -176,19 +193,23 @@ const Form: React.FC<FormProps> = ({
               border: '1px solid #ddd',
               borderRadius: '4px',
               fontSize: '14px',
-              borderColor: errors.menuOrder ? '#f44336' : '#ddd'
+              borderColor: errors.menuOrder ? '#f44336' : '#ddd',
             }}
             placeholder="메뉴 순서를 입력하세요"
           />
           {errors.menuOrder && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.menuOrder}
             </div>
           )}
         </div>
 
         {/* 버튼 영역 */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}
+        >
           <button
             type="button"
             onClick={onCancel}
@@ -198,7 +219,7 @@ const Form: React.FC<FormProps> = ({
               borderRadius: '4px',
               background: '#fff',
               cursor: 'pointer',
-              fontSize: '14px'
+              fontSize: '14px',
             }}
           >
             취소
@@ -213,10 +234,10 @@ const Form: React.FC<FormProps> = ({
               background: isLoading ? '#ccc' : '#2196f3',
               color: '#fff',
               cursor: isLoading ? 'not-allowed' : 'pointer',
-              fontSize: '14px'
+              fontSize: '14px',
             }}
           >
-            {isLoading ? '저장 중...' : (dataGroup ? '수정' : '생성')}
+            {isLoading ? '저장 중...' : dataGroup ? '수정' : '생성'}
           </button>
         </div>
       </div>

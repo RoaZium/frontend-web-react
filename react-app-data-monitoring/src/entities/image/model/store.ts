@@ -1,7 +1,12 @@
 // entities/image/model/store.ts
 import { create } from 'zustand';
 import { imageApi } from '../api/api';
-import type { ImageDto, ImageCreateRequest, ImageUpdateRequest, ImageQueryParams } from './types';
+import type {
+  ImageDto,
+  ImageCreateRequest,
+  ImageUpdateRequest,
+  ImageQueryParams,
+} from './types';
 
 interface ImageState {
   // 상태
@@ -33,7 +38,7 @@ export const useImageStore = create<ImageState>((set, get) => ({
     name: '',
     path: '',
     contentType: '',
-    size: undefined
+    size: undefined,
   },
 
   // 액션
@@ -45,7 +50,8 @@ export const useImageStore = create<ImageState>((set, get) => ({
       set({ images, isLoading: false });
       return images;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -59,7 +65,8 @@ export const useImageStore = create<ImageState>((set, get) => ({
       set({ selectedImage: image, isLoading: false });
       return image;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -70,33 +77,39 @@ export const useImageStore = create<ImageState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const newImage = await imageApi.createImage(imageData);
-      set((state) => ({
+      set(state => ({
         images: [...state.images, newImage],
-        isLoading: false
+        isLoading: false,
       }));
       return newImage;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 이미지 수정
-  updateImage: async (id: string, imageData: ImageUpdateRequest): Promise<ImageDto> => {
+  updateImage: async (
+    id: string,
+    imageData: ImageUpdateRequest
+  ): Promise<ImageDto> => {
     set({ isLoading: true, error: null });
     try {
       const updatedImage = await imageApi.updateImage(id, imageData);
-      set((state) => ({
+      set(state => ({
         images: state.images.map(image =>
           image.id === id ? updatedImage : image
         ),
-        selectedImage: state.selectedImage?.id === id ? updatedImage : state.selectedImage,
-        isLoading: false
+        selectedImage:
+          state.selectedImage?.id === id ? updatedImage : state.selectedImage,
+        isLoading: false,
       }));
       return updatedImage;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -107,13 +120,15 @@ export const useImageStore = create<ImageState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await imageApi.deleteImage(id);
-      set((state) => ({
+      set(state => ({
         images: state.images.filter(image => image.id !== id),
-        selectedImage: state.selectedImage?.id === id ? null : state.selectedImage,
-        isLoading: false
+        selectedImage:
+          state.selectedImage?.id === id ? null : state.selectedImage,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -124,13 +139,14 @@ export const useImageStore = create<ImageState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const uploadedImage = await imageApi.uploadImage(file);
-      set((state) => ({
+      set(state => ({
         images: [...state.images, uploadedImage],
-        isLoading: false
+        isLoading: false,
       }));
       return uploadedImage;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -153,7 +169,7 @@ export const useImageStore = create<ImageState>((set, get) => ({
       selectedImage: null,
       isLoading: false,
       error: null,
-      filters: { name: '', path: '', contentType: '', size: undefined }
+      filters: { name: '', path: '', contentType: '', size: undefined },
     });
-  }
+  },
 }));

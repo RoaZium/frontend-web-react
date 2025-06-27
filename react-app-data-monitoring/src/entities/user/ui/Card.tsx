@@ -72,12 +72,12 @@ const Card: React.FC<CardProps> = ({
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         transition: 'all 0.2s ease',
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         if (!isSelected) {
           e.currentTarget.style.backgroundColor = '#f5f5f5';
         }
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         if (!isSelected) {
           e.currentTarget.style.backgroundColor = '#fff';
         }

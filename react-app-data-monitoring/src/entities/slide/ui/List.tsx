@@ -81,12 +81,12 @@ const List: React.FC<ListProps> = ({ filters = {}, onSlideSelect }) => {
               alignItems: 'center',
               transition: 'background-color 0.2s ease',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               if (selectedSlide?.id !== slide.id) {
                 e.currentTarget.style.backgroundColor = '#f5f5f5';
               }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               if (selectedSlide?.id !== slide.id) {
                 e.currentTarget.style.backgroundColor = '#fff';
               }

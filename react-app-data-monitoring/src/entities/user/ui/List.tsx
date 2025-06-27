@@ -101,12 +101,12 @@ const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
               alignItems: 'center',
               transition: 'background-color 0.2s ease',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               if (selectedUser?.id !== user.id) {
                 e.currentTarget.style.backgroundColor = '#f5f5f5';
               }
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               if (selectedUser?.id !== user.id) {
                 e.currentTarget.style.backgroundColor = '#fff';
               }

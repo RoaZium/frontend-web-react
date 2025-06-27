@@ -1,7 +1,12 @@
 // entities/slide/model/store.ts
 import { create } from 'zustand';
 import { slideApi } from '../api/api';
-import type { SlideDto, SlideCreateRequest, SlideUpdateRequest, SlideQueryParams } from './types';
+import type {
+  SlideDto,
+  SlideCreateRequest,
+  SlideUpdateRequest,
+  SlideQueryParams,
+} from './types';
 
 interface SlideState {
   // 상태
@@ -33,7 +38,7 @@ export const useSlideStore = create<SlideState>((set, get) => ({
     presentationId: '',
     sectionId: '',
     name: '',
-    menuOrder: undefined
+    menuOrder: undefined,
   },
 
   // 액션
@@ -45,7 +50,8 @@ export const useSlideStore = create<SlideState>((set, get) => ({
       set({ slides, isLoading: false });
       return slides;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -59,7 +65,8 @@ export const useSlideStore = create<SlideState>((set, get) => ({
       set({ selectedSlide: slide, isLoading: false });
       return slide;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -70,33 +77,39 @@ export const useSlideStore = create<SlideState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const newSlide = await slideApi.createSlide(slideData);
-      set((state) => ({
+      set(state => ({
         slides: [...state.slides, newSlide],
-        isLoading: false
+        isLoading: false,
       }));
       return newSlide;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 슬라이드 수정
-  updateSlide: async (id: string, slideData: SlideUpdateRequest): Promise<SlideDto> => {
+  updateSlide: async (
+    id: string,
+    slideData: SlideUpdateRequest
+  ): Promise<SlideDto> => {
     set({ isLoading: true, error: null });
     try {
       const updatedSlide = await slideApi.updateSlide(id, slideData);
-      set((state) => ({
+      set(state => ({
         slides: state.slides.map(slide =>
           slide.id === id ? updatedSlide : slide
         ),
-        selectedSlide: state.selectedSlide?.id === id ? updatedSlide : state.selectedSlide,
-        isLoading: false
+        selectedSlide:
+          state.selectedSlide?.id === id ? updatedSlide : state.selectedSlide,
+        isLoading: false,
       }));
       return updatedSlide;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -107,13 +120,15 @@ export const useSlideStore = create<SlideState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await slideApi.deleteSlide(id);
-      set((state) => ({
+      set(state => ({
         slides: state.slides.filter(slide => slide.id !== id),
-        selectedSlide: state.selectedSlide?.id === id ? null : state.selectedSlide,
-        isLoading: false
+        selectedSlide:
+          state.selectedSlide?.id === id ? null : state.selectedSlide,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -141,8 +156,8 @@ export const useSlideStore = create<SlideState>((set, get) => ({
         presentationId: '',
         sectionId: '',
         name: '',
-        menuOrder: undefined
-      }
+        menuOrder: undefined,
+      },
     });
-  }
+  },
 }));

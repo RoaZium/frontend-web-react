@@ -90,14 +90,14 @@ const Form: React.FC<FormProps> = ({
       processedValue = parseFloat(value) || 0;
     }
 
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: processedValue,
     }));
 
     // 해당 필드의 에러 제거
     if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
         [name]: undefined,
       }));

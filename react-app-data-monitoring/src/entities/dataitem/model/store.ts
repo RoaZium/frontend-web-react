@@ -15,14 +15,17 @@ interface DataItemState {
   fetchDataItems: (filters?: DataItemFilter) => Promise<DataItemDto[]>;
   fetchDataItemById: (id: string) => Promise<DataItemDto>;
   createDataItem: (dataItemData: DataItemInput) => Promise<DataItemDto>;
-  updateDataItem: (id: string, dataItemData: DataItemInput) => Promise<DataItemDto>;
+  updateDataItem: (
+    id: string,
+    dataItemData: DataItemInput
+  ) => Promise<DataItemDto>;
   deleteDataItem: (id: string) => Promise<void>;
   setSelectedDataItem: (dataItem: DataItemDto | null) => void;
   setFilters: (filters: Partial<DataItemFilter>) => void;
   resetState: () => void;
 }
 
-export const useDataItemStore = create<DataItemState>((set) => ({
+export const useDataItemStore = create<DataItemState>(set => ({
   // 상태
   dataItems: [],
   selectedDataItem: null,
@@ -32,19 +35,22 @@ export const useDataItemStore = create<DataItemState>((set) => ({
     groupId: '',
     code: '',
     name: '',
-    menuOrder: undefined
+    menuOrder: undefined,
   },
 
   // 액션
   // 데이터 아이템 목록 조회
-  fetchDataItems: async (filters: DataItemFilter = {}): Promise<DataItemDto[]> => {
+  fetchDataItems: async (
+    filters: DataItemFilter = {}
+  ): Promise<DataItemDto[]> => {
     set({ isLoading: true, error: null });
     try {
       const dataItems = await dataItemApi.getDataItems(filters);
       set({ dataItems, isLoading: false });
       return dataItems;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -58,7 +64,8 @@ export const useDataItemStore = create<DataItemState>((set) => ({
       set({ selectedDataItem: dataItem, isLoading: false });
       return dataItem;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -69,33 +76,44 @@ export const useDataItemStore = create<DataItemState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const newDataItem = await dataItemApi.createDataItem(dataItemData);
-      set((state) => ({
+      set(state => ({
         dataItems: [...state.dataItems, newDataItem],
-        isLoading: false
+        isLoading: false,
       }));
       return newDataItem;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 데이터 아이템 수정
-  updateDataItem: async (id: string, dataItemData: DataItemInput): Promise<DataItemDto> => {
+  updateDataItem: async (
+    id: string,
+    dataItemData: DataItemInput
+  ): Promise<DataItemDto> => {
     set({ isLoading: true, error: null });
     try {
-      const updatedDataItem = await dataItemApi.updateDataItem(id, dataItemData);
-      set((state) => ({
-        dataItems: state.dataItems.map(item => 
+      const updatedDataItem = await dataItemApi.updateDataItem(
+        id,
+        dataItemData
+      );
+      set(state => ({
+        dataItems: state.dataItems.map(item =>
           item.id === id ? updatedDataItem : item
         ),
-        selectedDataItem: state.selectedDataItem?.id === id ? updatedDataItem : state.selectedDataItem,
-        isLoading: false
+        selectedDataItem:
+          state.selectedDataItem?.id === id
+            ? updatedDataItem
+            : state.selectedDataItem,
+        isLoading: false,
       }));
       return updatedDataItem;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -106,13 +124,15 @@ export const useDataItemStore = create<DataItemState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       await dataItemApi.deleteDataItem(id);
-      set((state) => ({
+      set(state => ({
         dataItems: state.dataItems.filter(item => item.id !== id),
-        selectedDataItem: state.selectedDataItem?.id === id ? null : state.selectedDataItem,
-        isLoading: false
+        selectedDataItem:
+          state.selectedDataItem?.id === id ? null : state.selectedDataItem,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -125,8 +145,8 @@ export const useDataItemStore = create<DataItemState>((set) => ({
 
   // 필터 설정
   setFilters: (filters: Partial<DataItemFilter>) => {
-    set((state) => ({
-      filters: { ...state.filters, ...filters }
+    set(state => ({
+      filters: { ...state.filters, ...filters },
     }));
   },
 
@@ -141,8 +161,8 @@ export const useDataItemStore = create<DataItemState>((set) => ({
         groupId: '',
         code: '',
         name: '',
-        menuOrder: undefined
-      }
+        menuOrder: undefined,
+      },
     });
-  }
+  },
 }));
