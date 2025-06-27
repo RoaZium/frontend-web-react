@@ -61,7 +61,9 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
 
   return (
     <div style={{ padding: '16px' }}>
-      <div style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}>
+      <div
+        style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}
+      >
         이미지 목록 ({images.length}개)
       </div>
       <div
@@ -117,13 +119,21 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
                 />
               </div>
               <div>
-                <div style={{ fontSize: '16px', fontWeight: '500', marginBottom: '4px' }}>
+                <div
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    marginBottom: '4px',
+                  }}
+                >
                   {image.name}
                 </div>
                 <div style={{ fontSize: '14px', color: '#666' }}>
                   경로: {image.path}
                 </div>
-                <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>
+                <div
+                  style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}
+                >
                   {formatFileSize(image.size)} | {image.contentType}
                 </div>
               </div>
