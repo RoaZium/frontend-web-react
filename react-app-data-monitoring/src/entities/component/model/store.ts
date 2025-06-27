@@ -15,7 +15,10 @@ interface ComponentState {
   fetchComponents: (filters?: ComponentFilter) => Promise<ComponentDto[]>;
   fetchComponentById: (id: string) => Promise<ComponentDto>;
   createComponent: (componentData: ComponentInput) => Promise<ComponentDto>;
-  updateComponent: (id: string, componentData: ComponentInput) => Promise<ComponentDto>;
+  updateComponent: (
+    id: string,
+    componentData: ComponentInput
+  ) => Promise<ComponentDto>;
   deleteComponent: (id: string) => Promise<void>;
   setSelectedComponent: (component: ComponentDto | null) => void;
   setFilters: (filters: Partial<ComponentFilter>) => void;
@@ -31,19 +34,22 @@ export const useComponentStore = create<ComponentState>((set, get) => ({
   filters: {
     slideId: '',
     category: '',
-    name: ''
+    name: '',
   },
 
   // 액션
   // 컴포넌트 목록 조회
-  fetchComponents: async (filters: ComponentFilter = {}): Promise<ComponentDto[]> => {
+  fetchComponents: async (
+    filters: ComponentFilter = {}
+  ): Promise<ComponentDto[]> => {
     set({ isLoading: true, error: null });
     try {
       const components = await componentApi.getComponents(filters);
       set({ components, isLoading: false });
       return components;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -57,44 +63,58 @@ export const useComponentStore = create<ComponentState>((set, get) => ({
       set({ selectedComponent: component, isLoading: false });
       return component;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 컴포넌트 생성
-  createComponent: async (componentData: ComponentInput): Promise<ComponentDto> => {
+  createComponent: async (
+    componentData: ComponentInput
+  ): Promise<ComponentDto> => {
     set({ isLoading: true, error: null });
     try {
       const newComponent = await componentApi.createComponent(componentData);
-      set((state) => ({
+      set(state => ({
         components: [...state.components, newComponent],
-        isLoading: false
+        isLoading: false,
       }));
       return newComponent;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
   },
 
   // 컴포넌트 수정
-  updateComponent: async (id: string, componentData: ComponentInput): Promise<ComponentDto> => {
+  updateComponent: async (
+    id: string,
+    componentData: ComponentInput
+  ): Promise<ComponentDto> => {
     set({ isLoading: true, error: null });
     try {
-      const updatedComponent = await componentApi.updateComponent(id, componentData);
-      set((state) => ({
+      const updatedComponent = await componentApi.updateComponent(
+        id,
+        componentData
+      );
+      set(state => ({
         components: state.components.map(component =>
           component.id === id ? updatedComponent : component
         ),
-        selectedComponent: state.selectedComponent?.id === id ? updatedComponent : state.selectedComponent,
-        isLoading: false
+        selectedComponent:
+          state.selectedComponent?.id === id
+            ? updatedComponent
+            : state.selectedComponent,
+        isLoading: false,
       }));
       return updatedComponent;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -105,13 +125,15 @@ export const useComponentStore = create<ComponentState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       await componentApi.deleteComponent(id);
-      set((state) => ({
+      set(state => ({
         components: state.components.filter(component => component.id !== id),
-        selectedComponent: state.selectedComponent?.id === id ? null : state.selectedComponent,
-        isLoading: false
+        selectedComponent:
+          state.selectedComponent?.id === id ? null : state.selectedComponent,
+        isLoading: false,
       }));
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -134,7 +156,7 @@ export const useComponentStore = create<ComponentState>((set, get) => ({
       selectedComponent: null,
       isLoading: false,
       error: null,
-      filters: { slideId: '', category: '', name: '' }
+      filters: { slideId: '', category: '', name: '' },
     });
-  }
+  },
 }));
