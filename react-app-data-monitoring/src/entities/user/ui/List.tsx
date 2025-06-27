@@ -9,14 +9,8 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
-  const {
-    users,
-    isLoading,
-    error,
-    selectedUser,
-    fetchUsers,
-    setSelectedUser,
-  } = useUserStore();
+  const { users, isLoading, error, selectedUser, fetchUsers, setSelectedUser } =
+    useUserStore();
 
   useEffect(() => {
     fetchUsers(filters);
@@ -29,19 +23,27 @@ const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case 'admin': return '#f44336';
-      case 'user': return '#2196f3';
-      case 'viewer': return '#4caf50';
-      default: return '#666';
+      case 'admin':
+        return '#f44336';
+      case 'user':
+        return '#2196f3';
+      case 'viewer':
+        return '#4caf50';
+      default:
+        return '#666';
     }
   };
 
   const getRoleText = (role: string) => {
     switch (role) {
-      case 'admin': return '관리자';
-      case 'user': return '사용자';
-      case 'viewer': return '열람자';
-      default: return role;
+      case 'admin':
+        return '관리자';
+      case 'user':
+        return '사용자';
+      case 'viewer':
+        return '열람자';
+      default:
+        return role;
     }
   };
 
@@ -111,7 +113,13 @@ const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
             }}
           >
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '4px',
+                }}
+              >
                 <div
                   style={{
                     fontSize: '16px',
@@ -121,23 +129,27 @@ const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
                 >
                   {user.name}
                 </div>
-                <span style={{
-                  fontSize: '12px',
-                  padding: '2px 8px',
-                  borderRadius: '12px',
-                  backgroundColor: getRoleColor(user.role),
-                  color: 'white',
-                  marginRight: '8px',
-                }}>
+                <span
+                  style={{
+                    fontSize: '12px',
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    backgroundColor: getRoleColor(user.role),
+                    color: 'white',
+                    marginRight: '8px',
+                  }}
+                >
                   {getRoleText(user.role)}
                 </span>
-                <span style={{
-                  fontSize: '12px',
-                  padding: '2px 8px',
-                  borderRadius: '12px',
-                  backgroundColor: user.isActive ? '#4caf50' : '#f44336',
-                  color: 'white',
-                }}>
+                <span
+                  style={{
+                    fontSize: '12px',
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    backgroundColor: user.isActive ? '#4caf50' : '#f44336',
+                    color: 'white',
+                  }}
+                >
                   {user.isActive ? '활성' : '비활성'}
                 </span>
               </div>
@@ -145,8 +157,11 @@ const List: React.FC<ListProps> = ({ filters = {}, onUserSelect }) => {
                 이메일: {user.email}
               </div>
               {user.lastLoginAt && (
-                <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>
-                  마지막 로그인: {new Date(user.lastLoginAt).toLocaleDateString('ko-KR')}
+                <div
+                  style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}
+                >
+                  마지막 로그인:{' '}
+                  {new Date(user.lastLoginAt).toLocaleDateString('ko-KR')}
                 </div>
               )}
             </div>

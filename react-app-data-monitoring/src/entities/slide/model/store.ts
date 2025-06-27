@@ -29,9 +29,11 @@ export const useSlideStore = create<SlideState>((set, get) => ({
   isLoading: false,
   error: null,
   filters: {
+    userId: '',
+    presentationId: '',
     sectionId: '',
-    title: '',
-    isVisible: undefined
+    name: '',
+    menuOrder: undefined
   },
 
   // 액션
@@ -134,7 +136,13 @@ export const useSlideStore = create<SlideState>((set, get) => ({
       selectedSlide: null,
       isLoading: false,
       error: null,
-      filters: { sectionId: '', title: '', isVisible: undefined }
+      filters: {
+        userId: '',
+        presentationId: '',
+        sectionId: '',
+        name: '',
+        menuOrder: undefined
+      }
     });
   }
 }));

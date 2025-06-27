@@ -13,12 +13,14 @@ export const slideApi = {
    * 전체 슬라이드 조회
    */
   getSlides: async (params: SlideQueryParams = {}): Promise<SlideDto[]> => {
-    const { sectionId, title, isVisible } = params;
+    const { userId, presentationId, sectionId, name, menuOrder } = params;
     const queryParams = new URLSearchParams();
     
+    if (userId) queryParams.append('userId', userId);
+    if (presentationId) queryParams.append('presentationId', presentationId);
     if (sectionId) queryParams.append('sectionId', sectionId);
-    if (title) queryParams.append('title', title);
-    if (isVisible !== undefined) queryParams.append('isVisible', isVisible.toString());
+    if (name) queryParams.append('name', name);
+    if (menuOrder !== undefined) queryParams.append('menuOrder', menuOrder.toString());
     
     const url = `${ENV.api.baseUrl}/v1/slides${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
     const response = await axios.get<SlideDto[]>(url);

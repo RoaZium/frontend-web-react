@@ -2,38 +2,46 @@
 
 export interface SlideDto {
   id: string; // UUID format
-  sectionId: string; // UUID format
-  title: string;
-  content: string;
-  menuOrder: number;
-  isVisible: boolean;
+  userId: string; // UUID format
+  presentationId?: string; // UUID format (optional)
+  sectionId?: string; // UUID format (optional)
+  name: string;
+  menuOrder: number; // int32
+  presentationOrder?: number; // int32 (optional)
+  propertiesJson?: string; // optional
   createdAt: string; // ISO date-time string
   updatedAt: string; // ISO date-time string
 }
 
 // Slide 생성/수정을 위한 입력 타입 (ID 제외)
 export interface SlideCreateRequest {
-  sectionId: string;
-  title: string;
-  content: string;
+  userId: string;
+  presentationId?: string;
+  sectionId?: string;
+  name: string;
   menuOrder: number;
-  isVisible: boolean;
+  presentationOrder?: number;
+  propertiesJson?: string;
 }
 
 // Slide 수정을 위한 입력 타입 (일부 필드만 수정 가능)
 export interface SlideUpdateRequest {
+  userId?: string;
+  presentationId?: string;
   sectionId?: string;
-  title?: string;
-  content?: string;
+  name?: string;
   menuOrder?: number;
-  isVisible?: boolean;
+  presentationOrder?: number;
+  propertiesJson?: string;
 }
 
 // Slide 조회 필터 파라미터
 export interface SlideQueryParams {
+  userId?: string;
+  presentationId?: string;
   sectionId?: string;
-  title?: string;
-  isVisible?: boolean;
+  name?: string;
+  menuOrder?: number;
 }
 
 // API 응답 타입

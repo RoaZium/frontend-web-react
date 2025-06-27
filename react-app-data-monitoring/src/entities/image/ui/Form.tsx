@@ -1,6 +1,10 @@
 // entities/image/ui/Form.tsx
 import React, { useState, useEffect, useRef } from 'react';
-import type { ImageDto, ImageCreateRequest, ImageUpdateRequest } from '../model/types';
+import type {
+  ImageDto,
+  ImageCreateRequest,
+  ImageUpdateRequest,
+} from '../model/types';
 
 interface FormProps {
   image?: ImageDto | null;
@@ -24,12 +28,12 @@ interface FormErrors {
   contentType?: string;
 }
 
-const Form: React.FC<FormProps> = ({ 
-  image = null, 
-  onSubmit, 
+const Form: React.FC<FormProps> = ({
+  image = null,
+  onSubmit,
   onUpload,
   onCancel,
-  isLoading = false 
+  isLoading = false,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<FormData>({
@@ -75,24 +79,26 @@ const Form: React.FC<FormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     let processedValue: string | number = value;
-    
+
     if (name === 'size') {
       processedValue = parseInt(value) || 0;
     }
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: processedValue
+      [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
@@ -101,7 +107,7 @@ const Form: React.FC<FormProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       // 파일 정보 자동 설정
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         name: file.name,
         size: file.size,
@@ -126,14 +132,14 @@ const Form: React.FC<FormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    const submitData = image 
-      ? { ...formData } as ImageUpdateRequest
-      : { ...formData } as ImageCreateRequest;
+    const submitData = image
+      ? ({ ...formData } as ImageUpdateRequest)
+      : ({ ...formData } as ImageCreateRequest);
 
     onSubmit?.(submitData);
   };
@@ -163,14 +169,25 @@ const Form: React.FC<FormProps> = ({
 
   return (
     <div style={{ padding: '16px', maxWidth: '600px' }}>
-      <h2 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}>
+      <h2
+        style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}
+      >
         {image ? '이미지 수정' : '새 이미지 생성'}
       </h2>
 
       {/* 파일 업로드 섹션 */}
       {!image && onUpload && (
-        <div style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
-          <h3 style={{ marginBottom: '12px', fontSize: '16px' }}>파일 업로드</h3>
+        <div
+          style={{
+            marginBottom: '24px',
+            padding: '16px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+          }}
+        >
+          <h3 style={{ marginBottom: '12px', fontSize: '16px' }}>
+            파일 업로드
+          </h3>
           <input
             ref={fileInputRef}
             type="file"
@@ -213,10 +230,17 @@ const Form: React.FC<FormProps> = ({
           />
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             이름 *
           </label>
           <input
@@ -226,7 +250,7 @@ const Form: React.FC<FormProps> = ({
             onChange={handleInputChange}
             style={{
               ...inputStyle,
-              borderColor: errors.name ? '#f44336' : '#ddd'
+              borderColor: errors.name ? '#f44336' : '#ddd',
             }}
             placeholder="이미지 이름을 입력하세요"
           />
@@ -234,7 +258,14 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             경로 *
           </label>
           <input
@@ -244,16 +275,30 @@ const Form: React.FC<FormProps> = ({
             onChange={handleInputChange}
             style={{
               ...inputStyle,
-              borderColor: errors.path ? '#f44336' : '#ddd'
+              borderColor: errors.path ? '#f44336' : '#ddd',
             }}
             placeholder="이미지 경로를 입력하세요"
           />
           {errors.path && <div style={errorStyle}>{errors.path}</div>}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '16px',
+            marginBottom: '16px',
+          }}
+        >
           <div>
-            <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '4px',
+                fontSize: '14px',
+                fontWeight: '500',
+              }}
+            >
               파일 크기 (bytes)
             </label>
             <input
@@ -266,14 +311,23 @@ const Form: React.FC<FormProps> = ({
               placeholder="0"
             />
             {formData.size > 0 && (
-              <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
+              <div
+                style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}
+              >
                 {formatFileSize(formData.size)}
               </div>
             )}
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '4px',
+                fontSize: '14px',
+                fontWeight: '500',
+              }}
+            >
               Content Type *
             </label>
             <input
@@ -283,15 +337,19 @@ const Form: React.FC<FormProps> = ({
               onChange={handleInputChange}
               style={{
                 ...inputStyle,
-                borderColor: errors.contentType ? '#f44336' : '#ddd'
+                borderColor: errors.contentType ? '#f44336' : '#ddd',
               }}
               placeholder="image/jpeg"
             />
-            {errors.contentType && <div style={errorStyle}>{errors.contentType}</div>}
+            {errors.contentType && (
+              <div style={errorStyle}>{errors.contentType}</div>
+            )}
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}
+        >
           {onCancel && (
             <button
               type="button"
@@ -323,7 +381,7 @@ const Form: React.FC<FormProps> = ({
               fontSize: '14px',
             }}
           >
-            {isLoading ? '처리 중...' : (image ? '수정' : '생성')}
+            {isLoading ? '처리 중...' : image ? '수정' : '생성'}
           </button>
         </div>
       </form>

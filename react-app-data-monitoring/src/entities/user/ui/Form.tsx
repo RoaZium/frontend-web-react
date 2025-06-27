@@ -1,6 +1,10 @@
 // entities/user/ui/Form.tsx
 import React, { useState, useEffect } from 'react';
-import type { UserDto, UserCreateRequest, UserUpdateRequest } from '../model/types';
+import type {
+  UserDto,
+  UserCreateRequest,
+  UserUpdateRequest,
+} from '../model/types';
 
 interface FormProps {
   user?: UserDto | null;
@@ -22,11 +26,11 @@ interface FormErrors {
   role?: string;
 }
 
-const Form: React.FC<FormProps> = ({ 
-  user = null, 
-  onSubmit, 
+const Form: React.FC<FormProps> = ({
+  user = null,
+  onSubmit,
   onCancel,
-  isLoading = false 
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState<FormData>({
     email: '',
@@ -69,38 +73,40 @@ const Form: React.FC<FormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     let processedValue: string | boolean = value;
-    
+
     if (type === 'checkbox') {
       processedValue = (e.target as HTMLInputElement).checked;
     }
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: processedValue
+      [name]: processedValue,
     }));
 
     // 에러 상태 클리어
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    const submitData = user 
-      ? { ...formData } as UserUpdateRequest
-      : { ...formData } as UserCreateRequest;
+    const submitData = user
+      ? ({ ...formData } as UserUpdateRequest)
+      : ({ ...formData } as UserCreateRequest);
 
     onSubmit?.(submitData);
   };
@@ -122,13 +128,22 @@ const Form: React.FC<FormProps> = ({
 
   return (
     <div style={{ padding: '16px', maxWidth: '600px' }}>
-      <h2 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}>
+      <h2
+        style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}
+      >
         {user ? '사용자 수정' : '새 사용자 생성'}
       </h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             이메일 *
           </label>
           <input
@@ -138,7 +153,7 @@ const Form: React.FC<FormProps> = ({
             onChange={handleInputChange}
             style={{
               ...inputStyle,
-              borderColor: errors.email ? '#f44336' : '#ddd'
+              borderColor: errors.email ? '#f44336' : '#ddd',
             }}
             placeholder="이메일을 입력하세요"
           />
@@ -146,7 +161,14 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             이름 *
           </label>
           <input
@@ -156,7 +178,7 @@ const Form: React.FC<FormProps> = ({
             onChange={handleInputChange}
             style={{
               ...inputStyle,
-              borderColor: errors.name ? '#f44336' : '#ddd'
+              borderColor: errors.name ? '#f44336' : '#ddd',
             }}
             placeholder="이름을 입력하세요"
           />
@@ -164,7 +186,14 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             역할 *
           </label>
           <select
@@ -173,7 +202,7 @@ const Form: React.FC<FormProps> = ({
             onChange={handleInputChange}
             style={{
               ...inputStyle,
-              borderColor: errors.role ? '#f44336' : '#ddd'
+              borderColor: errors.role ? '#f44336' : '#ddd',
             }}
           >
             <option value="viewer">열람자</option>
@@ -184,7 +213,14 @@ const Form: React.FC<FormProps> = ({
         </div>
 
         <div style={{ marginBottom: '24px' }}>
-          <label style={{ display: 'flex', alignItems: 'center', fontSize: '14px', fontWeight: '500' }}>
+          <label
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '14px',
+              fontWeight: '500',
+            }}
+          >
             <input
               type="checkbox"
               name="isActive"
@@ -196,7 +232,9 @@ const Form: React.FC<FormProps> = ({
           </label>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}
+        >
           {onCancel && (
             <button
               type="button"
@@ -228,7 +266,7 @@ const Form: React.FC<FormProps> = ({
               fontSize: '14px',
             }}
           >
-            {isLoading ? '처리 중...' : (user ? '수정' : '생성')}
+            {isLoading ? '처리 중...' : user ? '수정' : '생성'}
           </button>
         </div>
       </form>

@@ -100,19 +100,37 @@ const List: React.FC<ListProps> = ({ filters = {}, onSlideSelect }) => {
                   marginBottom: '4px',
                 }}
               >
-                {slide.title}
+                {slide.name}
               </div>
               <div style={{ fontSize: '14px', color: '#666' }}>
-                섹션 ID: {slide.sectionId} | 순서: {slide.menuOrder} | 상태:{' '}
-                {slide.isVisible ? '표시' : '숨김'}
+                사용자 ID: {slide.userId} | 메뉴 순서: {slide.menuOrder}
               </div>
-              <div
-                style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}
-              >
-                {slide.content.length > 50
-                  ? `${slide.content.substring(0, 50)}...`
-                  : slide.content}
-              </div>
+              {slide.presentationId && (
+                <div
+                  style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}
+                >
+                  프레젠테이션 ID: {slide.presentationId}
+                  {slide.presentationOrder &&
+                    ` | 순서: ${slide.presentationOrder}`}
+                </div>
+              )}
+              {slide.sectionId && (
+                <div
+                  style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}
+                >
+                  섹션 ID: {slide.sectionId}
+                </div>
+              )}
+              {slide.propertiesJson && (
+                <div
+                  style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}
+                >
+                  속성:{' '}
+                  {slide.propertiesJson.length > 30
+                    ? `${slide.propertiesJson.substring(0, 30)}...`
+                    : slide.propertiesJson}
+                </div>
+              )}
             </div>
             <div style={{ fontSize: '12px', color: '#999' }}>
               {new Date(slide.createdAt).toLocaleDateString('ko-KR')}

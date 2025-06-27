@@ -79,40 +79,58 @@ const Card: React.FC<CardProps> = ({
                 marginRight: '8px',
               }}
             >
-              {slide.title}
+              {slide.name}
             </div>
-            <span
-              style={{
-                fontSize: '12px',
-                padding: '2px 8px',
-                borderRadius: '12px',
-                backgroundColor: slide.isVisible ? '#4caf50' : '#f44336',
-                color: 'white',
-              }}
-            >
-              {slide.isVisible ? '표시' : '숨김'}
-            </span>
           </div>
           <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
-            섹션 ID: {slide.sectionId}
+            사용자 ID: {slide.userId}
           </div>
-          <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
-            순서: {slide.menuOrder}
+          {slide.presentationId && (
+            <div
+              style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}
+            >
+              프레젠테이션 ID: {slide.presentationId}
+            </div>
+          )}
+          {slide.sectionId && (
+            <div
+              style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}
+            >
+              섹션 ID: {slide.sectionId}
+            </div>
+          )}
+          <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
+            메뉴 순서: {slide.menuOrder}
           </div>
-          <div
-            style={{
-              fontSize: '14px',
-              color: '#333',
-              marginBottom: '8px',
-              lineHeight: '1.4',
-              maxHeight: '60px',
-              overflow: 'hidden',
-            }}
-          >
-            {slide.content.length > 100
-              ? `${slide.content.substring(0, 100)}...`
-              : slide.content}
-          </div>
+          {slide.presentationOrder && (
+            <div
+              style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}
+            >
+              프레젠테이션 순서: {slide.presentationOrder}
+            </div>
+          )}
+          {slide.propertiesJson && (
+            <div
+              style={{
+                fontSize: '12px',
+                color: '#333',
+                marginBottom: '8px',
+                padding: '8px',
+                backgroundColor: '#f9f9f9',
+                borderRadius: '4px',
+                fontFamily: 'monospace',
+                lineHeight: '1.4',
+                maxHeight: '60px',
+                overflow: 'hidden',
+                wordBreak: 'break-all',
+              }}
+            >
+              <strong>속성:</strong>{' '}
+              {slide.propertiesJson.length > 80
+                ? `${slide.propertiesJson.substring(0, 80)}...`
+                : slide.propertiesJson}
+            </div>
+          )}
           <div style={{ fontSize: '12px', color: '#999' }}>
             생성일: {new Date(slide.createdAt).toLocaleDateString('ko-KR')}
           </div>

@@ -24,11 +24,11 @@ interface FormErrors {
   menuOrder?: string;
 }
 
-const Form: React.FC<FormProps> = ({ 
-  dataItem = null, 
-  onSubmit, 
+const Form: React.FC<FormProps> = ({
+  dataItem = null,
+  onSubmit,
   onCancel,
-  isLoading = false 
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState<FormData>({
     groupId: '',
@@ -75,7 +75,9 @@ const Form: React.FC<FormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target;
     let processedValue: string | number = value;
 
@@ -83,23 +85,23 @@ const Form: React.FC<FormProps> = ({
       processedValue = parseFloat(value) || 0;
     }
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: processedValue
+      [name]: processedValue,
     }));
 
     // 해당 필드의 에러 제거
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: undefined
+        [name]: undefined,
       }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -118,10 +120,16 @@ const Form: React.FC<FormProps> = ({
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
       <h3>{dataItem ? '데이터 아이템 수정' : '데이터 아이템 생성'}</h3>
-      
+
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontWeight: 'bold',
+            }}
+          >
             그룹 ID *
           </label>
           <input
@@ -139,14 +147,22 @@ const Form: React.FC<FormProps> = ({
             placeholder="그룹 ID를 입력하세요"
           />
           {errors.groupId && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.groupId}
             </div>
           )}
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontWeight: 'bold',
+            }}
+          >
             코드 *
           </label>
           <input
@@ -164,14 +180,22 @@ const Form: React.FC<FormProps> = ({
             placeholder="코드를 입력하세요"
           />
           {errors.code && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.code}
             </div>
           )}
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontWeight: 'bold',
+            }}
+          >
             이름 *
           </label>
           <input
@@ -189,14 +213,22 @@ const Form: React.FC<FormProps> = ({
             placeholder="이름을 입력하세요"
           />
           {errors.name && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.name}
             </div>
           )}
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontWeight: 'bold',
+            }}
+          >
             메뉴 순서 *
           </label>
           <input
@@ -215,14 +247,22 @@ const Form: React.FC<FormProps> = ({
             placeholder="메뉴 순서를 입력하세요"
           />
           {errors.menuOrder && (
-            <div style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}>
+            <div
+              style={{ color: '#f44336', fontSize: '12px', marginTop: '4px' }}
+            >
               {errors.menuOrder}
             </div>
           )}
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
+          <label
+            style={{
+              display: 'block',
+              marginBottom: '4px',
+              fontWeight: 'bold',
+            }}
+          >
             데이터소스 속성
           </label>
           <textarea
@@ -242,7 +282,9 @@ const Form: React.FC<FormProps> = ({
           />
         </div>
 
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}
+        >
           {onCancel && (
             <button
               type="button"
@@ -273,7 +315,7 @@ const Form: React.FC<FormProps> = ({
               fontSize: '14px',
             }}
           >
-            {isLoading ? '처리중...' : (dataItem ? '수정' : '생성')}
+            {isLoading ? '처리중...' : dataItem ? '수정' : '생성'}
           </button>
         </div>
       </form>

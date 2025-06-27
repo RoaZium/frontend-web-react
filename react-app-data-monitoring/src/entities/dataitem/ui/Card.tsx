@@ -98,7 +98,7 @@ const Card: React.FC<CardProps> = ({
           <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
             그룹 ID: {dataItem.groupId}
           </div>
-          
+
           <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
             메뉴 순서: {dataItem.menuOrder}
           </div>

@@ -61,9 +61,7 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
 
   return (
     <div style={{ padding: '16px' }}>
-      <div
-        style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}
-      >
+      <div style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold' }}>
         이미지 목록 ({images.length}개)
       </div>
       <div
@@ -113,18 +111,13 @@ const List: React.FC<ListProps> = ({ filters = {}, onImageSelect }) => {
                     border: '1px solid #ddd',
                   }}
                   onError={(e) => {
-                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0MFY0MEgyMFYyMFoiIGZpbGw9IiNEREREREQiLz4KPC9zdmc+';
+                    e.currentTarget.src =
+                      'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yMCAyMEg0MFY0MEgyMFYyMFoiIGZpbGw9IiNEREREREQiLz4KPC9zdmc+';
                   }}
                 />
               </div>
               <div>
-                <div
-                  style={{
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    marginBottom: '4px',
-                  }}
-                >
+                <div style={{ fontSize: '16px', fontWeight: '500', marginBottom: '4px' }}>
                   {image.name}
                 </div>
                 <div style={{ fontSize: '14px', color: '#666' }}>
