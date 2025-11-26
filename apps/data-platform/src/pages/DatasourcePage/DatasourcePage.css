@@ -1,44 +1,55 @@
-.datasource-page {
-  max-width: 1400px;
-  margin: 0 auto;
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.page-content {
-  background-color: white;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.status-connected {
+  background: #d1fae5;
+  color: #065f46;
 }
 
-.content-placeholder {
-  text-align: center;
-  padding: 3rem 2rem;
+.status-disconnected {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-.placeholder-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.content-placeholder h2 {
+.detail-title {
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: #1a1a1a;
 }
 
-.content-placeholder p {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.feature-list {
-  display: inline-block;
-  text-align: left;
-  margin-top: 1.5rem;
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.feature-list li {
-  padding: 0.5rem 0;
-  color: var(--text-primary);
-  font-size: 0.875rem;
+.detail-label {
+  font-weight: 600;
+  color: #666;
+  min-width: 100px;
+}
+
+.detail-value {
+  color: #1a1a1a;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
